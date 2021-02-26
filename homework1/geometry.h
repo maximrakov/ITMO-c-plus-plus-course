@@ -1,12 +1,6 @@
-#include <cmath>
-//h->cpp
 class Point{
     public:
-        Point()
-        : x(0), y(0){
-        }
-        //default arguments
-        Point(int x_,int y_)
+        Point(int x_ = 0,int y_ = 0)
         : x(x_), y(y_) {
         }
         Point(Point const &pnt)
@@ -20,17 +14,20 @@ class Point{
             y = other.y;
             return *this;
         }
-        //space
+        
         int getX()const{
             return x;
         }
         int getY()const{
             return y;
         }
-    //space
+        
     private:
         int x,y;
 };
+int dist(Point a, Point b){
+  return sqrt((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() - b.getY()));
+}
 class PolygonalChain{
     public:
         PolygonalChain(int sz_, Point *pnt_)
@@ -54,8 +51,9 @@ class PolygonalChain{
             if(&other == this){
                 return *this;
             }
-            //dif sizes kill ur program
             sz = other.sz;
+			delete[] pnt;
+            pnt = new Point[sz];
             for(int i = 0;i < sz;i++){
               pnt[i] = other.pnt[i];
 			}
@@ -70,38 +68,28 @@ class PolygonalChain{
         int perimeter()const{
             int res = 0;
             int x,y,x1,y1;
-            for(int i = 1;i < this->getN();i++){
-                //why do u need method when u have pnt
-                //dist between Points many times
-                x = this->getPoint(i).getX();
-                x1 = this->getPoint(i - 1).getX();
-                y = this->getPoint(i).getY();
-                y1 = this->getPoint(i - 1).getY();
-                res += sqrt((x - x1) * (x - x1) + (y - y1) * (y - y1));
+            for(int i = 1;i < getN();i++){
+                res += dist(pnt[i],pnt[i - 1]);
             }
             if(getClosed()) {
-                x = this->getPoint(0).getX();
-                x1 = this->getPoint(this->getN() - 1).getX();
-                y = this->getPoint(0).getY();
-                y1 = this->getPoint(this->getN() - 1).getY();
-                res += sqrt((x - x1) * (x - x1) + (y - y1) * (y - y1));
+                res += dist(pnt[0],pnt[getN() - 1]);
             }
             return res;
         }
+        
         void setClosed(bool val) {
             closed = val;
         }
         bool getClosed() const {
             return closed;
         }
+        
         ~PolygonalChain(){
-        		//it's weird
-        		if(pnt){
-       	    		delete[] pnt;
-       	    		pnt = 0;
-        		}
+			delete[] pnt;
+			pnt = 0;
     	}
-    private:
+    	
+    protected:
         int sz;
         Point *pnt;
         bool closed;
@@ -129,15 +117,7 @@ class Polygon: public ClosedPolygonalChain{
     	}
     private:
         double s_triangle(Point a,Point b, Point c)const{
-        	//no herons, something else
-            double ab = (a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() - b.getY());
-            ab = sqrt(ab);
-            double bc = (c.getX() - b.getX()) * (c.getX() - b.getX()) + (c.getY() - b.getY()) * (c.getY() - b.getY());
-            bc = sqrt(bc);
-            double ca = (a.getX() - c.getX()) * (a.getX() - c.getX()) + (a.getY() - c.getY()) * (a.getY() - c.getY());
-            ca = sqrt(ca);
-            double p = (ab + bc + ca) / 2;
-            return sqrt(p * (p - ab) * (p - bc) * (p - ca));
+        	return abs((a.getX() - b.getX()) * (c.getY() - b.getY()) - (a.getY() - b.getY()) * (c.getX() - b.getX())) / 2;
         }
 };
 class Triangle: public Polygon{
@@ -145,14 +125,12 @@ class Triangle: public Polygon{
         Triangle(int sz, Point *pnt) : Polygon(sz, pnt) {
         }
         bool hasRightAngle()const{
-        	//protected for points
-            Point a = this->getPoint(0);
-            Point b = this->getPoint(1);
-            Point c = this->getPoint(2);
-            //dist ^ 2
-            int ab = (b.getX() - a.getX()) * (b.getX() - a.getX()) + ((b.getY() - a.getY()) * (b.getY() - a.getY()));
-            int bc = (b.getX() - c.getX()) * (b.getX() - c.getX()) + ((b.getY() - c.getY()) * (b.getY() - c.getY()));
-            int ca = (c.getX() - a.getX()) * (c.getX() - a.getX()) + ((c.getY() - a.getY()) * (c.getY() - a.getY()));
+            Point a = pnt[0];
+            Point b = pnt[1];
+            Point c = pnt[2];
+            int ab = dist(a,b) * dist(a,b);
+            int bc = dist(b,c) * dist(b,c);
+            int ca = dist(c,a) * dist(c,a);
             if(ab + bc ==  ca){
                 return true;
             }
@@ -173,29 +151,28 @@ class Trapezoid: public Polygon{
         Trapezoid(int sz, Point *pnt): Polygon(sz, pnt) {
         }
         int height()const{
-            int S = this->area();
-            Point a = this->getPoint(1);
-            Point b = this->getPoint(2);
-            Point c = this->getPoint(0);
-            Point d = this->getPoint(3);
-            //foundation
-            int fund1 = (a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() -b.getY());
-            fund1 = sqrt(fund1);
-            int fund2 = (c.getX() - d.getX()) * (c.getX() - d.getX()) + (c.getY() - d.getY()) * (c.getY() -d.getY());
-            fund2 = sqrt(fund2);
-            return 2 * S / (fund1 + fund2);
+            int S = area();
+            Point a = pnt[1];
+            Point b = pnt[2];
+            Point c = pnt[0];
+            Point d = pnt[3];
+            int foundation1 = dist(a,b);
+            int foundation2 = dist(c,d);
+            return 2 * S / (foundation1 + foundation2);
         }
         ~Trapezoid(){
     	}
 };
-
-//area and perimeter
 class RegularPolygon: public Polygon{
     public:
         RegularPolygon(int sz,Point* pnt): Polygon(sz,pnt){
         }
+        int perimeter()const{
+			return getN() * dist(pnt[0], pnt[1]);
+		}
+		int area()const{
+		  return (getN() * dist(pnt[0], pnt[1]) * dist(pnt[0], pnt[1]))  / (4. * tan(3.14 / getN()));
+		}
         ~RegularPolygon(){
-        	
     	}
 };
-
