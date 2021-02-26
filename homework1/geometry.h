@@ -68,7 +68,6 @@ class PolygonalChain{
         }
         int perimeter()const{
             int res = 0;
-            int x,y,x1,y1;
             for(int i = 1;i < getN();i++){
                 res += dist(pnt[i],pnt[i - 1]);
             }
