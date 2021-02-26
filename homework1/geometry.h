@@ -1,3 +1,4 @@
+#include <cmath>
 class Point{
     public:
         Point(int x_ = 0,int y_ = 0)
