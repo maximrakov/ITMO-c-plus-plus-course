@@ -85,8 +85,8 @@ class PolygonalChain{
         }
         
         ~PolygonalChain(){
-			delete[] pnt;
-			pnt = 0;
+		delete[] pnt;
+		pnt = 0;
     	}
     	
     protected:
@@ -109,7 +109,7 @@ class Polygon: public ClosedPolygonalChain{
         double area()const{
             double S_Polygon = 0;
             for(int i = 1;i < this->getN() - 1;i++){
-                S_Polygon += s_triangle(this->getPoint(0),this->getPoint(i),this->getPoint(i + 1));
+            	S_Polygon += s_triangle(this->getPoint(0),this->getPoint(i),this->getPoint(i + 1));
             }
             return S_Polygon;
         }
@@ -168,11 +168,11 @@ class RegularPolygon: public Polygon{
         RegularPolygon(int sz,Point* pnt): Polygon(sz,pnt){
         }
         int perimeter()const{
-			return getN() * dist(pnt[0], pnt[1]);
-		}
-		int area()const{
-		  return (getN() * dist(pnt[0], pnt[1]) * dist(pnt[0], pnt[1]))  / (4. * tan(3.14 / getN()));
-		}
+		return getN() * dist(pnt[0], pnt[1]);
+	}
+	int area()const{
+		return (getN() * dist(pnt[0], pnt[1]) * dist(pnt[0], pnt[1]))  / (4. * tan(3.14 / getN()));
+	}
         ~RegularPolygon(){
     	}
 };
