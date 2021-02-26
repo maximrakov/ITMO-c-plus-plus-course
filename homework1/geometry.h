@@ -1,4 +1,6 @@
 #include <cmath>
+//we want cpp file
+//we need spaces and go indenation
 class Point{
     public:
         Point(int x_ = 0,int y_ = 0)
@@ -26,6 +28,7 @@ class Point{
     private:
         int x,y;
 };
+//const&
 int dist(Point a, Point b){
   return sqrt((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() - b.getY()));
 }
@@ -86,6 +89,7 @@ class PolygonalChain{
         
         ~PolygonalChain(){
 		delete[] pnt;
+		//why? hmmm
 		pnt = 0;
     	}
     	
@@ -128,6 +132,7 @@ class Triangle: public Polygon{
             Point a = pnt[0];
             Point b = pnt[1];
             Point c = pnt[2];
+            //dist use sqrt, and here u use pow2
             int ab = dist(a,b) * dist(a,b);
             int bc = dist(b,c) * dist(b,c);
             int ca = dist(c,a) * dist(c,a);
