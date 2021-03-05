@@ -12,14 +12,14 @@ Point :: Point(Point const &pnt)
 }
 
 Point& Point :: operator=(const Point& other) {
-	if(&other == this){
-	    return *this;
-	}
+    if(&other == this){
+        return *this;
+    }
 	
-	x = other.x;	
-	y = other.y;
+    x = other.x;	
+    y = other.y;
 	
-	return *this;
+    return *this;
 }
 
 int Point :: getX()const {
@@ -31,11 +31,11 @@ int Point :: getY()const {
 }
 
 int dist(const Point& a, const Point& b) {
-  return sqrt((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() - b.getY()));
+    return sqrt((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() - b.getY()));
 }
 
 int dist2(const Point& a, const Point& b) {
-  return ((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() - b.getY()));
+    return ((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() - b.getY()));
 }
 
 PolygonalChain :: PolygonalChain(int sz_, Point *pnt_)
@@ -50,13 +50,13 @@ PolygonalChain :: PolygonalChain(int sz_, Point *pnt_)
 }
 
 PolygonalChain :: PolygonalChain(PolygonalChain const &other) {
-	sz = other.sz;
+    sz = other.sz;
 	
     pnt = new Point[sz];
     
     for(int i = 0;i < sz;i++){
-      pnt[i] = other.pnt[i];
-	}
+        pnt[i] = other.pnt[i];
+    }
 }
 
 PolygonalChain& PolygonalChain :: operator=(const PolygonalChain& other) {
@@ -65,12 +65,12 @@ PolygonalChain& PolygonalChain :: operator=(const PolygonalChain& other) {
     }
     
     sz = other.sz;
-	delete[] pnt;
+    delete[] pnt;
     pnt = new Point[sz];
     
     for(int i = 0;i < sz;i++) {
-      pnt[i] = other.pnt[i];
-	}
+        pnt[i] = other.pnt[i];
+    }
 	
     return *this;
 }
@@ -104,7 +104,7 @@ bool PolygonalChain ::getClosed() const {
 }
 
 PolygonalChain::~PolygonalChain() {
-	delete[] pnt;
+    delete[] pnt;
 }
 
 ClosedPolygonalChain::ClosedPolygonalChain(int sz, Point *pnt):  PolygonalChain(sz, pnt) {
@@ -185,11 +185,11 @@ RegularPolygon::RegularPolygon(int sz,Point* pnt): Polygon(sz,pnt) {
 }
 
 int RegularPolygon::perimeter() const {
-	return getN() * dist(pnt[0], pnt[1]);
+    return getN() * dist(pnt[0], pnt[1]);
 }
 
 int RegularPolygon::area() const {
-	return (getN() * dist(pnt[0], pnt[1]) * dist(pnt[0], pnt[1]))  / (4. * tan(3.14 / getN()));
+    return (getN() * dist(pnt[0], pnt[1]) * dist(pnt[0], pnt[1]))  / (4. * tan(3.14 / getN()));
 }
 
 RegularPolygon::~RegularPolygon() {
