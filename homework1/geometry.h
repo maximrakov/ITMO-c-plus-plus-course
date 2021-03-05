@@ -3,7 +3,7 @@
 
 class Point{
     public:
-        Point(int x_ = 0,int y_ = 0);
+        Point(int x_ = 0, int y_ = 0);
         Point(Point const &pnt);
         Point& operator=(const  Point& other);
         
@@ -11,7 +11,7 @@ class Point{
         int getY()const;
         
     private:
-        int x,y;
+        int x, y;
 };
 
 class PolygonalChain{
@@ -52,7 +52,7 @@ class Polygon: public ClosedPolygonalChain{
         ~Polygon();
         
     private:
-        double s_triangle(Point a,Point b, Point c)const;
+        double s_triangle(Point a, Point b, Point c)const;
 };
 
 class Triangle: public Polygon{
@@ -76,7 +76,7 @@ class Trapezoid: public Polygon{
 
 class RegularPolygon: public Polygon{
     public:
-        RegularPolygon(int sz,Point* pnt);
+        RegularPolygon(int sz, Point* pnt);
         
 	int perimeter()const;
         int area()const;
