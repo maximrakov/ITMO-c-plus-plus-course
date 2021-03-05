@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Point :: Point(int x_,int y_)
+Point :: Point(int x_, int y_)
 : x(x_), y(y_) {
 }
 
@@ -79,11 +79,11 @@ int  PolygonalChain :: getN() const {
     return sz;
 }
 
-Point PolygonalChain ::getPoint(int ind) const {
+Point PolygonalChain :: getPoint(int ind) const {
     return pnt[ind];
 }
 
-int PolygonalChain::perimeter() const {
+int PolygonalChain :: perimeter() const {
     int res = 0;
 	for(int i = 1;i < getN();i++) {
         res += dist(pnt[i],pnt[i - 1]);
@@ -95,15 +95,15 @@ int PolygonalChain::perimeter() const {
     return res;
 }
 
-void PolygonalChain ::setClosed(bool val) {
+void PolygonalChain :: setClosed(bool val) {
     closed = val;
 }
 
-bool PolygonalChain ::getClosed() const {
+bool PolygonalChain :: getClosed() const {
     return closed;
 }
 
-PolygonalChain::~PolygonalChain() {
+PolygonalChain :: ~PolygonalChain() {
     delete[] pnt;
 }
 
@@ -111,32 +111,32 @@ ClosedPolygonalChain::ClosedPolygonalChain(int sz, Point *pnt):  PolygonalChain(
     setClosed(1);
 }
 
-ClosedPolygonalChain::~ClosedPolygonalChain() {
+ClosedPolygonalChain :: ~ClosedPolygonalChain() {
 }
 
-Polygon::Polygon(int sz, Point *pnt) : ClosedPolygonalChain(sz, pnt) {
+Polygon :: Polygon(int sz, Point *pnt) : ClosedPolygonalChain(sz, pnt) {
 }
 
-double Polygon::area() const {
+double Polygon :: area() const {
     double S_Polygon = 0;
     for(int i = 1;i < this->getN() - 1;i++) {
-    	S_Polygon += s_triangle(this->getPoint(0),this->getPoint(i),this->getPoint(i + 1));
+    	S_Polygon += s_triangle(this->getPoint(0), this->getPoint(i), this->getPoint(i + 1));
     }
     
     return S_Polygon;
 }
 
-Polygon::~Polygon() {
+Polygon :: ~Polygon() {
 }
 
-double Polygon::s_triangle(Point a,Point b, Point c) const {
+double Polygon :: s_triangle(Point a,Point b, Point c) const {
     return abs((a.getX() - b.getX()) * (c.getY() - b.getY()) - (a.getY() - b.getY()) * (c.getX() - b.getX())) / 2;
 }
 
-Triangle::Triangle(int sz, Point *pnt) : Polygon(sz, pnt) {
+Triangle :: Triangle(int sz, Point *pnt) : Polygon(sz, pnt) {
 }
 
-bool Triangle::hasRightAngle() const {
+bool Triangle :: hasRightAngle() const {
     Point a = pnt[0];
     Point b = pnt[1];
     Point c = pnt[2];
@@ -158,13 +158,13 @@ bool Triangle::hasRightAngle() const {
     return false;
 }
 
-Triangle::~Triangle() {
+Triangle :: ~Triangle() {
 }
 
-Trapezoid::Trapezoid(int sz, Point *pnt): Polygon(sz, pnt) {
+Trapezoid :: Trapezoid(int sz, Point *pnt): Polygon(sz, pnt) {
 }
 
-int Trapezoid::height() const {
+int Trapezoid :: height() const {
     int S = area();
     
     Point a = pnt[1];
@@ -172,25 +172,25 @@ int Trapezoid::height() const {
     Point c = pnt[0];
     Point d = pnt[3];
     
-    int foundation1 = dist(a,b);
-    int foundation2 = dist(c,d);
+    int foundation1 = dist(a, b);
+    int foundation2 = dist(c, d);
     
     return 2 * S / (foundation1 + foundation2);
 }
 
-Trapezoid::~Trapezoid() {
+Trapezoid :: ~Trapezoid() {
 }
 
-RegularPolygon::RegularPolygon(int sz,Point* pnt): Polygon(sz,pnt) {
+RegularPolygon :: RegularPolygon(int sz, Point* pnt): Polygon(sz, pnt) {
 }
 
-int RegularPolygon::perimeter() const {
+int RegularPolygon :: perimeter() const {
     return getN() * dist(pnt[0], pnt[1]);
 }
 
-int RegularPolygon::area() const {
+int RegularPolygon :: area() const {
     return (getN() * dist(pnt[0], pnt[1]) * dist(pnt[0], pnt[1]))  / (4. * tan(3.14 / getN()));
 }
 
-RegularPolygon::~RegularPolygon() {
+RegularPolygon :: ~RegularPolygon() {
 }
