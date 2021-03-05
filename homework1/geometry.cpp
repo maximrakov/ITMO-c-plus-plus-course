@@ -8,7 +8,7 @@ Point :: Point(int x_, int y_)
 }
 
 Point :: Point(Point const &pnt)
-: x(pnt.x),y(pnt.y) {
+: x(pnt.x), y(pnt.y) {
 }
 
 Point& Point :: operator=(const Point& other) {
@@ -30,10 +30,12 @@ int Point :: getY()const {
     return y;
 }
 
+//todo int??????
 int dist(const Point& a, const Point& b) {
     return sqrt((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() - b.getY()));
 }
 
+//todo copy-paste
 int dist2(const Point& a, const Point& b) {
     return ((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() - b.getY()));
 }
@@ -116,8 +118,9 @@ ClosedPolygonalChain :: ~ClosedPolygonalChain() {
 
 Polygon :: Polygon(int sz, Point *pnt) : ClosedPolygonalChain(sz, pnt) {
 }
-
+//todo S P A C E S
 double Polygon :: area() const {
+    //todo var with capital letter
     double S_Polygon = 0;
     for(int i = 1;i < this->getN() - 1;i++) {
     	S_Polygon += s_triangle(this->getPoint(0), this->getPoint(i), this->getPoint(i + 1));
@@ -165,6 +168,7 @@ Trapezoid :: Trapezoid(int sz, Point *pnt): Polygon(sz, pnt) {
 }
 
 int Trapezoid :: height() const {
+    //todo too capital
     int S = area();
     
     Point a = pnt[1];
@@ -184,11 +188,13 @@ Trapezoid :: ~Trapezoid() {
 RegularPolygon :: RegularPolygon(int sz, Point* pnt): Polygon(sz, pnt) {
 }
 
+//todo doubles??? i think
 int RegularPolygon :: perimeter() const {
     return getN() * dist(pnt[0], pnt[1]);
 }
 
 int RegularPolygon :: area() const {
+	//todo const should static private; 3.14 is strange (u cound think pi = 3)
     return (getN() * dist(pnt[0], pnt[1]) * dist(pnt[0], pnt[1]))  / (4. * tan(3.14 / getN()));
 }
 
