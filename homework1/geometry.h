@@ -24,7 +24,7 @@ class PolygonalChain{
         int getN()const;
         Point getPoint(int ind)const;
         
-        int perimeter()const;
+        double perimeter()const;
         void setClosed(bool val);
         bool getClosed() const;
         
@@ -78,14 +78,14 @@ class RegularPolygon: public Polygon{
     public:
         RegularPolygon(int sz, Point* pnt);
         
-	int perimeter()const;
-        int area()const;
+	    double perimeter()const;
+        double area()const;
 	
-    	~RegularPolygon();
+        ~RegularPolygon();
 };
 
-int dist(const Point& a, const Point& b);
+double dist(const Point& a, const Point& b);
 
-int dist2(const Point& a, const Point& b);
+double dist2(const Point& a, const Point& b);
 
 #endif
