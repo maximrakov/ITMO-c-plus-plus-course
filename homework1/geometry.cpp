@@ -2,7 +2,6 @@
 #include <cmath>
 
 using namespace std;
-
 Point :: Point(int x_, int y_)
 : x(x_), y(y_) {
 }
@@ -30,21 +29,22 @@ int Point :: getY()const {
     return y;
 }
 
-//todo int??????
-int dist(const Point& a, const Point& b) {
-    return sqrt((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() - b.getY()));
+
+//fixed copy-paste
+double dist2(const Point& a, const Point& b) {
+    return ((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() - b.getY()));
 }
 
-//todo copy-paste
-int dist2(const Point& a, const Point& b) {
-    return ((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() - b.getY()));
+//fixed int??????
+double dist(const Point& a, const Point& b) {
+    return sqrt(dist2(a, b));
 }
 
 PolygonalChain :: PolygonalChain(int sz_, Point *pnt_)
 :sz(sz_) {
     pnt = new Point[sz_];
     
-    for(int i = 0;i < sz_;i++){
+    for(int i = 0; i < sz_; i++){
         pnt[i] = pnt_[i];
     }
     
@@ -56,7 +56,7 @@ PolygonalChain :: PolygonalChain(PolygonalChain const &other) {
 	
     pnt = new Point[sz];
     
-    for(int i = 0;i < sz;i++){
+    for(int i = 0; i < sz; i++){
         pnt[i] = other.pnt[i];
     }
 }
@@ -70,7 +70,7 @@ PolygonalChain& PolygonalChain :: operator=(const PolygonalChain& other) {
     delete[] pnt;
     pnt = new Point[sz];
     
-    for(int i = 0;i < sz;i++) {
+    for(int i = 0; i < sz; i++) {
         pnt[i] = other.pnt[i];
     }
 	
@@ -85,13 +85,13 @@ Point PolygonalChain :: getPoint(int ind) const {
     return pnt[ind];
 }
 
-int PolygonalChain :: perimeter() const {
-    int res = 0;
-	for(int i = 1;i < getN();i++) {
-        res += dist(pnt[i],pnt[i - 1]);
+double PolygonalChain :: perimeter() const {
+    double res = 0;
+	for(int i = 1; i < getN(); i++) {
+        res += dist(pnt[i], pnt[i - 1]);
     }
     if(getClosed()) {
-        res += dist(pnt[0],pnt[getN() - 1]);
+        res += dist(pnt[0], pnt[getN() - 1]);
     }
     
     return res;
@@ -118,15 +118,15 @@ ClosedPolygonalChain :: ~ClosedPolygonalChain() {
 
 Polygon :: Polygon(int sz, Point *pnt) : ClosedPolygonalChain(sz, pnt) {
 }
-//todo S P A C E S
+//fixed S P A C E S
 double Polygon :: area() const {
-    //todo var with capital letter
-    double S_Polygon = 0;
-    for(int i = 1;i < this->getN() - 1;i++) {
-    	S_Polygon += s_triangle(this->getPoint(0), this->getPoint(i), this->getPoint(i + 1));
+    //fixed var with capital letter
+    double s_polygon = 0;
+    for(int i = 1; i < this->getN() - 1; i++) {
+    	s_polygon += s_triangle(this->getPoint(0), this->getPoint(i), this->getPoint(i + 1));
     }
     
-    return S_Polygon;
+    return s_polygon;
 }
 
 Polygon :: ~Polygon() {
@@ -168,18 +168,18 @@ Trapezoid :: Trapezoid(int sz, Point *pnt): Polygon(sz, pnt) {
 }
 
 int Trapezoid :: height() const {
-    //todo too capital
-    int S = area();
+    //fixed too capital
+    double trapezoid_area = area();
     
     Point a = pnt[1];
     Point b = pnt[2];
     Point c = pnt[0];
     Point d = pnt[3];
     
-    int foundation1 = dist(a, b);
-    int foundation2 = dist(c, d);
+    double foundation1 = dist(a, b);
+    double foundation2 = dist(c, d);
     
-    return 2 * S / (foundation1 + foundation2);
+    return 2 * trapezoid_area / (foundation1 + foundation2);
 }
 
 Trapezoid :: ~Trapezoid() {
@@ -188,14 +188,14 @@ Trapezoid :: ~Trapezoid() {
 RegularPolygon :: RegularPolygon(int sz, Point* pnt): Polygon(sz, pnt) {
 }
 
-//todo doubles??? i think
-int RegularPolygon :: perimeter() const {
+//fixed doubles??? i think
+double RegularPolygon :: perimeter() const {
     return getN() * dist(pnt[0], pnt[1]);
 }
 
-int RegularPolygon :: area() const {
-	//todo const should static private; 3.14 is strange (u cound think pi = 3)
-    return (getN() * dist(pnt[0], pnt[1]) * dist(pnt[0], pnt[1]))  / (4. * tan(3.14 / getN()));
+double RegularPolygon :: area() const {
+    //fixed const should static private; 3.14 is strange (u cound think pi = 3)
+    return (getN() * dist(pnt[0], pnt[1]) * dist(pnt[0], pnt[1]))  / (4. * tan(M_PI / getN()));
 }
 
 RegularPolygon :: ~RegularPolygon() {
