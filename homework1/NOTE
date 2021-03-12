@@ -1,0 +1,9 @@
+Pulling https://github.com/maximrakov/IS-2020-prog-2-sem/homework1
+Pull finished
+It's compiled
+Return code: 3
+Assertion failed: floatArea.area() == 0.5, file main.cpp, line 50
+
+No warnings
+
+
