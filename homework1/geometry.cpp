@@ -11,7 +11,7 @@ Point :: Point(Point const &pnt)
 }
 
 Point& Point :: operator=(const Point& other) {
-    if(&other == this){
+    if (&other == this){
         return *this;
     }
 	
