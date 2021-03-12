@@ -44,7 +44,7 @@ PolygonalChain :: PolygonalChain(int sz_, Point *pnt_)
 :sz(sz_) {
     pnt = new Point[sz_];
     
-    for(int i = 0; i < sz_; i++){
+    for (int i = 0; i < sz_; i++){
         pnt[i] = pnt_[i];
     }
     
@@ -56,13 +56,13 @@ PolygonalChain :: PolygonalChain(PolygonalChain const &other) {
 	
     pnt = new Point[sz];
     
-    for(int i = 0; i < sz; i++){
+    for (int i = 0; i < sz; i++){
         pnt[i] = other.pnt[i];
     }
 }
 
 PolygonalChain& PolygonalChain :: operator=(const PolygonalChain& other) {
-    if(&other == this) {
+    if (&other == this) {
         return *this;
     }
     
@@ -70,7 +70,7 @@ PolygonalChain& PolygonalChain :: operator=(const PolygonalChain& other) {
     delete[] pnt;
     pnt = new Point[sz];
     
-    for(int i = 0; i < sz; i++) {
+    for (int i = 0; i < sz; i++) {
         pnt[i] = other.pnt[i];
     }
 	
@@ -87,10 +87,10 @@ Point PolygonalChain :: getPoint(int ind) const {
 
 double PolygonalChain :: perimeter() const {
     double res = 0;
-	for(int i = 1; i < getN(); i++) {
+	for (int i = 1; i < getN(); i++) {
         res += dist(pnt[i], pnt[i - 1]);
     }
-    if(getClosed()) {
+    if (getClosed()) {
         res += dist(pnt[0], pnt[getN() - 1]);
     }
     
@@ -122,7 +122,7 @@ Polygon :: Polygon(int sz, Point *pnt) : ClosedPolygonalChain(sz, pnt) {
 double Polygon :: area() const {
     //fixed var with capital letter
     double s_polygon = 0;
-    for(int i = 1; i < this->getN() - 1; i++) {
+    for (int i = 1; i < this->getN() - 1; i++) {
     	s_polygon += s_triangle(this->getPoint(0), this->getPoint(i), this->getPoint(i + 1));
     }
     
@@ -148,13 +148,13 @@ bool Triangle :: hasRightAngle() const {
     int bc = dist2(b,c);
     int ca = dist2(c,a);
     
-    if(ab + bc ==  ca) {
+    if (ab + bc ==  ca) {
         return true;
     }
-    if(bc +  ca == ab) {
+    if (bc +  ca == ab) {
         return true;
     }
-    if(ca +  ab ==  bc) {
+    if (ca +  ab ==  bc) {
       return true;
     }
     
