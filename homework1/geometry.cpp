@@ -6,7 +6,7 @@ Point :: Point(int x_, int y_)
 : x(x_), y(y_) {
 }
 
-Point :: Point(Point const &pnt)
+Point :: Point(const Point& pnt)
 : x(pnt.x), y(pnt.y) {
 }
 
@@ -51,7 +51,7 @@ PolygonalChain :: PolygonalChain(int sz_, Point *pnt_)
     closed = 0;
 }
 
-PolygonalChain :: PolygonalChain(PolygonalChain const &other) {
+PolygonalChain :: PolygonalChain(const PolygonalChain& other) {
     sz = other.sz;
 	
     pnt = new Point[sz];
