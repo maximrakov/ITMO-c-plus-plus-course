@@ -133,7 +133,7 @@ Polygon :: ~Polygon() {
 }
 
 double Polygon :: s_triangle(Point a,Point b, Point c) const {
-    return abs((a.getX() - b.getX()) * (c.getY() - b.getY()) - (a.getY() - b.getY()) * (c.getX() - b.getX())) / 2;
+    return fabs((a.getX() - b.getX()) * (c.getY() - b.getY()) - (a.getY() - b.getY()) * (c.getX() - b.getX())) / 2.;
 }
 
 Triangle :: Triangle(int sz, Point *pnt) : Polygon(sz, pnt) {
@@ -179,7 +179,7 @@ int Trapezoid :: height() const {
     double foundation1 = dist(a, b);
     double foundation2 = dist(c, d);
     
-    return 2 * trapezoid_area / (foundation1 + foundation2);
+    return 2. * trapezoid_area / (foundation1 + foundation2);
 }
 
 Trapezoid :: ~Trapezoid() {
