@@ -24,10 +24,11 @@ class PolygonalChain{
         int getN()const;
         Point getPoint(int ind)const;
         
+        //todo they should be virtual
         double perimeter()const;
         void setClosed(bool val);
         bool getClosed() const;
-        
+		//todo and its too        
         ~PolygonalChain();
     	
     protected:

@@ -30,12 +30,12 @@ int Point :: getY()const {
 }
 
 
-//fixed copy-paste
+//todo its int
 double dist2(const Point& a, const Point& b) {
     return ((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() - b.getY()));
 }
 
-//fixed int??????
+
 double dist(const Point& a, const Point& b) {
     return sqrt(dist2(a, b));
 }
@@ -118,9 +118,7 @@ ClosedPolygonalChain :: ~ClosedPolygonalChain() {
 
 Polygon :: Polygon(int sz, Point *pnt) : ClosedPolygonalChain(sz, pnt) {
 }
-//fixed S P A C E S
 double Polygon :: area() const {
-    //fixed var with capital letter
     double s_polygon = 0;
     for (int i = 1; i < this->getN() - 1; i++) {
     	s_polygon += s_triangle(this->getPoint(0), this->getPoint(i), this->getPoint(i + 1));
@@ -188,13 +186,12 @@ Trapezoid :: ~Trapezoid() {
 RegularPolygon :: RegularPolygon(int sz, Point* pnt): Polygon(sz, pnt) {
 }
 
-//fixed doubles??? i think
 double RegularPolygon :: perimeter() const {
     return getN() * dist(pnt[0], pnt[1]);
 }
 
 double RegularPolygon :: area() const {
-    //fixed const should static private; 3.14 is strange (u cound think pi = 3)
+    //todo what
     return (getN() * dist(pnt[0], pnt[1]) * dist(pnt[0], pnt[1]))  / (4. * tan(M_PI / getN()));
 }
 
