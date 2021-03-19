@@ -191,8 +191,8 @@ double RegularPolygon :: perimeter() const {
 }
 
 double RegularPolygon :: area() const {
-    //todo what
-    return (getN() * dist(pnt[0], pnt[1]) * dist(pnt[0], pnt[1]))  / (4. * tan(M_PI / getN()));
+    //fixed what
+    return (getN() * pow(dist(pnt[0], pnt[1]), 2)) / (4. * tan(M_PI / getN()));
 }
 
 RegularPolygon :: ~RegularPolygon() {
