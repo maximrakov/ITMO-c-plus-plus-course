@@ -24,12 +24,12 @@ class PolygonalChain{
         int getN()const;
         Point getPoint(int ind)const;
         
-        //todo they should be virtual
-        double perimeter()const;
-        void setClosed(bool val);
-        bool getClosed() const;
-		//todo and its too        
-        ~PolygonalChain();
+        //fixed they should be virtual
+        virtual double perimeter()const;
+        virtual void setClosed(bool val);
+        virtual bool getClosed() const;
+	//fixed and its too        
+        virtual ~PolygonalChain();
     	
     protected:
         int sz;
@@ -87,6 +87,6 @@ class RegularPolygon: public Polygon{
 
 double dist(const Point& a, const Point& b);
 
-double dist2(const Point& a, const Point& b);
+int dist2(const Point& a, const Point& b);
 
 #endif
