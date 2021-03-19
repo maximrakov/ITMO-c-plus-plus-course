@@ -30,8 +30,8 @@ int Point :: getY()const {
 }
 
 
-//todo its int
-double dist2(const Point& a, const Point& b) {
+//fixed its int
+int dist2(const Point& a, const Point& b) {
     return ((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY()) * (a.getY() - b.getY()));
 }
 
