@@ -1,6 +1,9 @@
 #include <cmath>
+//todo cpp file
+//todo S P A C E S
 class Polynomial {
   public:
+  	//todo make copy-constructor
   	Polynomial() {
   	  start_power = 0;
   	  end_power = 0;
@@ -22,6 +25,8 @@ class Polynomial {
 	  	members[i] = polynom[i];
 	  }
 	}
+	//todo remove const
+	//todo make int -> const
 	int& operator[](int ind) const{
 	  if(start_power > ind){
   		int *p = new int[1];
@@ -31,6 +36,7 @@ class Polynomial {
  	  return members[ind - start_power];
 	}
 	
+	//todo it already exists
 	int min(int a,int b)const{
 	  if(a < b){
 	    return a;
@@ -48,6 +54,7 @@ class Polynomial {
 	}
 	
 	friend std::ostream& operator<<(std::ostream& stream, const Polynomial& polynom);
+	//todo const Polyminal&
 	friend Polynomial operator*(int mn, const Polynomial p);
 	Polynomial operator-()const{
 	  int* res_members = new int[end_power - start_power + 1];
@@ -58,6 +65,7 @@ class Polynomial {
 	  return w;
 	}
 	
+	//todo you need += and then + from +=
 	Polynomial operator+(const Polynomial& sum2)const{
 	  int res_start_power = min(start_power, sum2.start_power);
 	  int res_end_power = max(end_power, sum2.end_power);
@@ -69,6 +77,7 @@ class Polynomial {
 	  return rs;
 	}
 	
+	//todo without creating new object
 	Polynomial operator-(const Polynomial& sum2)const{
 	  return *this + (-sum2);
 	}
@@ -159,6 +168,7 @@ class Polynomial {
 	  return res;
 	}
   private:
+  	//todo nope
   	const int maxn = 100;
   	int* members,dop;
   	int start_power, end_power;
