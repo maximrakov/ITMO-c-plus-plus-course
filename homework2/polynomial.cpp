@@ -10,7 +10,7 @@ Polynomial::Polynomial() {
   members = new int[end_power - start_power + 1];
 
   for(int i = 0; i <= end_power - start_power + 1; i++){
-	    members[i] = 0;	
+    members[i] = 0;	
   }
 }
 Polynomial::Polynomial(const Polynomial& other) {
@@ -50,17 +50,19 @@ int& Polynomial::operator[](int ind) {
   	if(end_power < ind) {
   	  new_end_power = ind;
   	}
+  	
   	int* new_members = new int[new_end_power - new_start_power + 1];
-  	for(int i = 0; i < new_end_power - new_start_power + 1; i++){
+  	for(int i = 0; i < new_end_power - new_start_power + 1; i++) {
   	  new_members[i] = 0;
   	}
-  	for(int i = 0; i < end_power - start_power + 1; i++){
+  	for(int i = 0; i < end_power - start_power + 1; i++) {
   	  new_members[i + (start_power - new_start_power)] = members[i]; 
   	}
+  	
   	delete[] members;
   	members = new int[new_end_power - new_start_power + 1];
-  	for(int i = 0; i < new_end_power - new_start_power + 1; i++){
-  		members[i] = new_members[i];
+  	for(int i = 0; i < new_end_power - new_start_power + 1; i++) {
+  	  members[i] = new_members[i];
   	}
   	start_power = new_start_power;
   	end_power = new_end_power; 
@@ -73,7 +75,7 @@ int& Polynomial::operator[](int ind) {
 
 Polynomial Polynomial::operator-()const {
   Polynomial negative = (*this);
-  for(int i = negative.start_power;i <= negative.end_power;i++){
+  for(int i = negative.start_power; i <= negative.end_power; i++) {
     negative[i] *= -1;
   }
   return negative;
@@ -94,9 +96,9 @@ Polynomial Polynomial::operator-(const Polynomial& sum2)const {
 }
 
 Polynomial Polynomial::operator*(const Polynomial& sum2)const {
-	Polynomial rs = *this;
-	rs *= sum2;
-	return rs;
+  Polynomial rs = *this;
+  rs *= sum2;
+  return rs;
 }
 
 Polynomial Polynomial::operator/(const int& del)const {
@@ -197,7 +199,7 @@ Polynomial operator*(int mn, const Polynomial& p) {
  	Polynomial prod;
   	prod = p;
   	for(int i = prod.start_power; i <= prod.end_power; i++) {
-    	prod[i] *= mn;
+      prod[i] *= mn;
   	}
   	return prod;
 }
