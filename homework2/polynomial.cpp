@@ -1,9 +1,6 @@
 #include <cmath>
 #include <iostream>
 #include "polynomial.h"
-//fixed cpp file
-//fixed S P A C E S
-//fixed make copy-constructor
 Polynomial::Polynomial() {
   start_power = 0;
   end_power = 0;
@@ -31,8 +28,7 @@ Polynomial::Polynomial(int mn, int mx, int *polynom) {
   	members[i] = polynom[i];
   }
 }
-//fixed remove const
-//fixed make int -> const
+//todo return int
 const int& Polynomial::operator[](int ind) const {
   if(start_power > ind || end_power < ind) {
     return add;
@@ -69,9 +65,8 @@ int& Polynomial::operator[](int ind) {
   }
   return members[ind - start_power];
 }
-//fixed it already exists
 
-//fixed const Polyminal&
+
 
 Polynomial Polynomial::operator-()const {
   Polynomial negative = (*this);
@@ -81,14 +76,13 @@ Polynomial Polynomial::operator-()const {
   return negative;
 }
 
-//fixed you need += and then + from +=
+
 Polynomial Polynomial::operator+(const Polynomial& sum2)const {
   Polynomial sm = *this;
   sm += sum2;
   return sm;
 }
 
-//fixed without creating new object
 Polynomial Polynomial::operator-(const Polynomial& sum2)const {
   Polynomial diff = *this;
   diff -= sum2;
