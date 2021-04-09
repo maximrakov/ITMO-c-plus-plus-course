@@ -10,7 +10,7 @@ class Polynomial {
 	Polynomial(int mn, int mx, int *polynom);
 	//fixed remove const
 	//fixed make int -> const
-	const int& operator[](int ind) const;
+	int operator[](int ind) const;
 	int& operator[](int ind);
 	//fixed it already exists
 	

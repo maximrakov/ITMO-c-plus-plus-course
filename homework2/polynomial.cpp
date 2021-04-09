@@ -28,8 +28,8 @@ Polynomial::Polynomial(int mn, int mx, int *polynom) {
   	members[i] = polynom[i];
   }
 }
-//todo return int
-const int& Polynomial::operator[](int ind) const {
+//fixed return int
+int Polynomial::operator[](int ind) const {
   if(start_power > ind || end_power < ind) {
     return add;
   }else {
