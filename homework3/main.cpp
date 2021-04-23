@@ -4,9 +4,9 @@
 #include <map>
 #include <set>
 #include <vector>
-#include <cmath>
-#include <string>
-#include <algorithm>
+#include<cmath>
+#include<string>
+#include<algorithm>
 using namespace std; 
 // #include "pugixml.hpp"
 struct stop{
@@ -19,7 +19,7 @@ class stops{
 	  float a_to_f(string qq){
 	  	int cnt = 0;
 	  	bool after = 0;
-	  	for(int i = 0;i < qq.size();i++){
+	  	for(int i = 0;i < (int)qq.size();i++){
           if(qq[i] == '.'){
             after = 1;
             continue;
@@ -30,7 +30,7 @@ class stops{
 	  	}
 	  	double mn = pow(10,-cnt);
 	  	double res;
-	  	for(int i = qq.size() - 1;i >= 0;i--){
+	  	for(int i = (int)qq.size() - 1;i >= 0;i--){
 	  		if(qq[i] >= '0' && qq[i] <= '9'){
 	  			res += mn * (qq[i] - '0');
 	  			mn *= 10;
@@ -41,7 +41,7 @@ class stops{
 	  pair<float, float> sep_float(string floats){
 	  	string fs_double, sc_double;
 	  	bool fs = 1;
-	  	for(int i = 0;i < floats.size();i++){
+	  	for(int i = 0;i < (int)floats.size();i++){
 	  	  if(floats[i] == ','){
 	  	    fs = 0;
 	  	    continue;
@@ -65,6 +65,9 @@ class stops{
 
 	  stops(string file_name){
 	    pugi::xml_parse_result result = doc.load_file("data.xml");
+	    if(result == -1){
+	      cout << file_name << "isn't open";
+	    }
 	  	pugi::xml_node tools = doc.child("dataset");
 	    for (pugi::xml_node tool = tools.first_child(); tool; tool = tool.next_sibling()) {
 	      stop current;
@@ -107,7 +110,7 @@ class stops{
 	  }
 	  vector<stop> get_transport(string name, vector<stop>z){
 	  	vector<stop>rs;
-	  	for(int i = 0;i < z.size();i++){
+	  	for(int i = 0;i < (int)z.size();i++){
 	  	  if(z[i].veh == name){
 	  	    rs.push_back(z[i]);
 	  	  }
@@ -117,7 +120,7 @@ class stops{
 	   vector<string> parse_root(string root){
 	  	vector<string>result;
 	  	string current = "";
-	  	for(int i = 0;i < root.size();i++){
+	  	for(int i = 0;i < (int)root.size();i++){
 	  		if(root[i] == ',' || root[i] == '.' || root[i] == ' '){
 	  		  result.push_back(current);
 	  		  current = "";
@@ -132,10 +135,10 @@ class stops{
 	  }
 	  vector<stop> parse_roots(){
 	  	vector<stop>rss;
-	  	for(int i = 0;i < a.size();i++){
+	  	for(int i = 0;i < (int)a.size();i++){
 	  	  stop curr = a[i];
 	  	  vector<string> cur_roots = parse_root(string(curr.rout));
-	  	  for(int j = 0;j < cur_roots.size();j++){
+	  	  for(int j = 0;j < (int)cur_roots.size();j++){
 	  	    curr.rout = cur_roots[j];
 	  	    rss.push_back(curr);
 	  	  }
@@ -146,7 +149,7 @@ class stops{
 	  	return a;
 	  }
       void print(vector<stop>qq){
-        for(int i = 0;i < qq.size();i++){	
+        for(int i = 0;i < (int)qq.size();i++){	
       	  cout << qq[i].number << ' ' << qq[i].cord_x << ' ' << qq[i].cord_y << ' ' << qq[i].veh << ' ' << qq[i].obj << ' ' << qq[i].name_stp << ' ' << qq[i].of_nm << ' ' << qq[i].loc << ' ' << qq[i].rout << endl;
         }
       }
@@ -157,7 +160,7 @@ class stops{
 void max_stops(string name,stops& pp){
   map<string,int>cnt_stops;
   vector<stop>cur_stop = pp.get_transport(name, pp.parse_roots());
-  for(int i = 0;i < cur_stop.size();i++){
+  for(int i = 0;i < (int)cur_stop.size();i++){
     cnt_stops[cur_stop[i].rout]++;
   }
   int cnt_max = 0;
@@ -174,14 +177,14 @@ void max_root(string name, stops& pp){
   map<string, vector<pair<float, float> > >cnt_roots;
   vector<stop>cur_stop = pp.get_transport(name, pp.parse_roots());
   map<string,int>length_of_root;
-  for(int i = 0;i < cur_stop.size();i++){
+  for(int i = 0;i < (int)cur_stop.size();i++){
     cnt_roots[cur_stop[i].rout].push_back(make_pair(cur_stop[i].cord_x,cur_stop[i].cord_y ));
   }
   for(map<string, vector<pair<float, float> > >::iterator it = cnt_roots.begin();it != cnt_roots.end();it++){
   	string name = it->first;
   	vector<pair<float, float> >cord = it->second;
   	double len = 0;
-  	for(int j = 1;j < cord.size();j++){
+  	for(int j = 1;j < (int)cord.size();j++){
   		len += sqrt((cord[j].first - cord[j - 1].first) * (cord[j].first - cord[j - 1].first) + (cord[j].second - cord[j - 1].second) * (cord[j].second - cord[j - 1].second));
   	}
   	length_of_root[name] = len;
@@ -194,12 +197,12 @@ void max_root(string name, stops& pp){
   	  name_of_most = it->first;
   	}
   }
-  cout << name_of_most << endl;
+  cout << name_of_most << ' '<< max_lnght<< endl;
 }
 void max_street(stops& pp){
   vector<stop>cur_stop = pp.get();
   map<string, int>cnt_street;
-  for(int i = 0;i < cur_stop.size();i++){
+  for(int i = 0;i < (int)cur_stop.size();i++){
     if(cur_stop[i].loc != ""){
     	cnt_street[cur_stop[i].loc]++;
     }
