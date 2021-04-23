@@ -9,6 +9,7 @@
 #include<algorithm>
 using namespace std; 
 // #include "pugixml.hpp"
+//todo S P A C E S
 struct stop {
   int number;
   float cord_x, cord_y;
@@ -16,6 +17,7 @@ struct stop {
 };
 class stops {
 	public:
+	  //todo qq 
 	  float a_to_f(string qq) {
 	  	int cnt = 0;
 	  	bool after = 0;
@@ -54,6 +56,7 @@ class stops {
 		  	  }
 	  	  }else {
 	  	  	if(fs) {
+	  	  		//todo char(46) is weird
 		  	  	fs_double += char(46);
 		  	  }else {
 		  	  	sc_double += char(46);
@@ -155,6 +158,7 @@ class stops {
 	  vector<stop> get() {
 	  	return a;
 	  }
+	  //todo const&
       void print(vector<stop>qq) {
         for(int i = 0;i < (int)qq.size(); i++){	
       	  cout << qq[i].number << ' ' << qq[i].cord_x << ' ' << qq[i].cord_y << ' ' << qq[i].veh << ' ' << qq[i].obj << ' ' << qq[i].name_stp << ' ' << qq[i].of_nm << ' ' << qq[i].loc << ' ' << qq[i].rout << endl;
@@ -172,6 +176,7 @@ void max_stops(string name, stops& pp) {
   }
   int cnt_max = 0;
   string name_of_max_stop;
+  //todo you dont need iterator here, use range-based for
   for(map<string,int>::iterator it = cnt_stops.begin();it != cnt_stops.end();it++) {
   	if(it->second > cnt_max) {
   	  cnt_max = it->second;
@@ -209,6 +214,7 @@ void max_root(string name, stops& pp) {
 void max_street(stops& pp){
   vector<stop>cur_stop = pp.get();
   map<string, int>cnt_street;
+  //todo range-based for
   for(int i = 0;i < (int)cur_stop.size();i++){
     if(cur_stop[i].loc != ""){
     	cnt_street[cur_stop[i].loc]++;
