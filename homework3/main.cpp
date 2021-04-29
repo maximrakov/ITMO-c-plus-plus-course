@@ -8,70 +8,77 @@
 #include<string>
 #include<algorithm>
 using namespace std; 
-// #include "pugixml.hpp"
-//todo S P A C E S
+//fixed S P A C E S
 struct stop {
   int number;
   float cord_x, cord_y;
   string veh, obj, name_stp, of_nm, loc, rout;
 };
 class stops {
-	public:
-	  //todo qq 
-	  float a_to_f(string qq) {
-	  	int cnt = 0;
-	  	bool after = 0;
-	  	for(int i = 0;i < (int)qq.size();i++) {
-          if(qq[i] == '.'){
+    public:
+      //fixed qq 
+      float a_to_f(string float_string) {
+        int cnt = 0;
+        bool after = 0;
+
+        for(int i = 0; i < (int)float_string.size(); i++) {
+          if(float_string[i] == '.'){
             after = 1;
             continue;
           }
           if(after) {
             cnt++;
           }
-	  	}
-	  	double mn = pow(10, -cnt);
-	  	double res;
-	  	for(int i = (int)qq.size() - 1; i >= 0; i--) {
-	  		if(qq[i] >= '0' && qq[i] <= '9') {
-	  			res += mn * (qq[i] - '0');
-	  			mn *= 10;
-	  		}
-	  	}
-	  	return res;
-	  }
-	  pair<float, float> sep_float(string floats) {
-	  	string fs_double, sc_double;
-	  	bool fs = 1;
-	  	for(int i = 0;i < (int)floats.size();i++) {
-	  	  if(floats[i] == ',') {
-	  	    fs = 0;
-	  	    continue;
-	  	  }
-	  	  if(floats[i] >= '0' && floats[i] <= '9') {
-		  	  if(fs) {
-		  	  	fs_double += floats[i];
-		  	  }else {
-		  	  	sc_double += floats[i];
-		  	  }
-	  	  }else {
-	  	  	if(fs) {
-	  	  		//todo char(46) is weird
-		  	  	fs_double += char(46);
-		  	  }else {
-		  	  	sc_double += char(46);
-		  	  }
-	  	  }
-	  	}
-	  	return make_pair(a_to_f(fs_double.c_str()),  a_to_f(sc_double.c_str()));
+        }
+
+        double mn = pow(10, -cnt);
+        double res;
+        for(int i = (int)float_string.size() - 1; i >= 0; i--) {
+          if(float_string[i] >= '0' && float_string[i] <= '9') {
+            res += mn * (float_string[i] - '0');
+            mn *= 10;
+          }
+        }
+        return res;
+      }
+
+      pair<float, float> sep_float(string floats) {
+        string fs_double, sc_double;
+        bool fs = 1;
+
+        for(int i = 0; i < (int)floats.size(); i++) {
+          if(floats[i] == ',') {
+            fs = 0;
+            continue;
+          }
+          if(floats[i] >= '0' && floats[i] <= '9') {
+            if(fs) {
+              fs_double += floats[i];
+            }else {
+              sc_double += floats[i];
+            }
+          }else {
+            if(fs) {
+              //fixed char(46) is weird
+             fs_double += '.';
+            }else {
+              sc_double += '.';
+            }
+        }
+      }
+
+	  return make_pair(a_to_f(fs_double.c_str()),  a_to_f(sc_double.c_str()));
 	  }
 
 	  stops(string file_name) {
 	    pugi::xml_parse_result result = doc.load_file("data.xml");
+
 	    if(result == -1) {
 	      cout << file_name << "isn't open";
 	    }
+
 	  	pugi::xml_node tools = doc.child("dataset");
+
 	    for (pugi::xml_node tool = tools.first_child(); tool; tool = tool.next_sibling()) {
 	      stop current;
 
@@ -105,25 +112,31 @@ class stops {
 	      a.push_back(current);
 	    }
 	  }
+
 	  vector<stop> get_sort(vector<stop>st) {
-	  	sort(st.begin(), st.end(), [](stop a, stop b) {
+	  	sort(st.begin(), st.end(), [](const stop& a, const stop& b) {
         	return (a.cord_x * a.cord_x + a.cord_y * a.cord_y) < (b.cord_x * b.cord_x + b.cord_y * b.cord_y);
     	});
     	return st;
 	  }
+
 	  vector<stop> get_transport(string name, vector<stop>z) {
 	  	vector<stop>rs;
-	  	for(int i = 0;i < (int)z.size();i++) {
+
+	  	for(int i = 0;i < (int)z.size(); i++) {
 	  	  if(z[i].veh == name) {
 	  	    rs.push_back(z[i]);
 	  	  }
 	  	}
+
 	  	return rs;
 	  }
+
 	   vector<string> parse_root(string root) {
 	  	vector<string>result;
 	  	string current = "";
-	  	for(int i = 0;i < (int)root.size();i++) {
+
+	  	for(int i = 0;i < (int)root.size(); i++) {
 	  		if(root[i] == ',' || root[i] == '.' || root[i] == ' ') {
 	  		  result.push_back(current);
 	  		  current = "";
@@ -136,8 +149,10 @@ class stops {
 
 	  	return result;
 	  }
+
 	  vector<stop> parse_roots() {
 	  	vector<stop>rss;
+
 	  	for(int i = 0; i < (int)a.size(); i++) {
 	  	  stop curr = a[i];
 	  	  vector<string> cur_roots = parse_root(string(curr.rout));
@@ -146,8 +161,10 @@ class stops {
 	  	    rss.push_back(curr);
 	  	  }
 	  	}
+
 	  	return rss;
 	  }
+
 	  set<string> transport_name(){
 	    set<string>ans;
 	    for(int i = 0;i < (int)a.size(); i++){
@@ -155,11 +172,13 @@ class stops {
 	    }
 	    return ans;
 	  }
+
 	  vector<stop> get() {
 	  	return a;
 	  }
-	  //todo const&
-      void print(vector<stop>qq) {
+
+	  //fixed const&
+      void print(const vector<stop>& qq) {
         for(int i = 0;i < (int)qq.size(); i++){	
       	  cout << qq[i].number << ' ' << qq[i].cord_x << ' ' << qq[i].cord_y << ' ' << qq[i].veh << ' ' << qq[i].obj << ' ' << qq[i].name_stp << ' ' << qq[i].of_nm << ' ' << qq[i].loc << ' ' << qq[i].rout << endl;
         }
@@ -168,80 +187,102 @@ class stops {
   	    pugi::xml_document doc;
 		vector<stop>a;
 };
+
 void max_stops(string name, stops& pp) {
   map<string,int>cnt_stops;
   vector<stop>cur_stop = pp.get_transport(name, pp.parse_roots());
-  for(int i = 0;i < (int)cur_stop.size();i++) {
+
+  for(int i = 0; i < (int)cur_stop.size(); i++) {
     cnt_stops[cur_stop[i].rout]++;
   }
+
   int cnt_max = 0;
   string name_of_max_stop;
-  //todo you dont need iterator here, use range-based for
-  for(map<string,int>::iterator it = cnt_stops.begin();it != cnt_stops.end();it++) {
-  	if(it->second > cnt_max) {
-  	  cnt_max = it->second;
-  	  name_of_max_stop = it->first;
-  	}
+
+  //fixed you dont need iterator here, use range-based for 
+  for (auto&& [nm, count]: cnt_stops) {
+   if(count > cnt_max) {
+ 	  cnt_max = count;
+ 	  name_of_max_stop = nm;
+ 	}
   }
+
   cout << name_of_max_stop << endl;
 }
+
 void max_root(string name, stops& pp) {
   map<string, vector<pair<float, float> > >cnt_roots;
   vector<stop>cur_stop = pp.get_transport(name, pp.parse_roots());
   map<string,int>length_of_root;
-  for(int i = 0;i < (int)cur_stop.size();i++) {
-    cnt_roots[cur_stop[i].rout].push_back(make_pair(cur_stop[i].cord_x,cur_stop[i].cord_y ));
+
+  for(int i = 0; i < (int)cur_stop.size(); i++) {
+    cnt_roots[cur_stop[i].rout].push_back(make_pair(cur_stop[i].cord_x, cur_stop[i].cord_y));
   }
-  for(map<string, vector<pair<float, float> > >::iterator it = cnt_roots.begin();it != cnt_roots.end();it++) {
-  	string name = it->first;
-  	vector<pair<float, float> >cord = it->second;
+
+  for(auto&& [nm, cords]: cnt_roots) {
+  	string name = nm;
+  	vector<pair<float, float> >cord = cords;
   	double len = 0;
   	for(int j = 1; j < (int)cord.size(); j++) {
   		len += sqrt((cord[j].first - cord[j - 1].first) * (cord[j].first - cord[j - 1].first) + (cord[j].second - cord[j - 1].second) * (cord[j].second - cord[j - 1].second));
   	}
   	length_of_root[name] = len;
   }
+
   double max_lnght = 0;
   string name_of_most;
-  for(map<string, int>::iterator it = length_of_root.begin(); it !=  length_of_root.end(); it++) {
-  	if(max_lnght < it->second){
-  	  max_lnght = it->second;
-  	  name_of_most = it->first;
+  for(auto&& [nm, len]: length_of_root){
+  	if(max_lnght < len){
+  	  max_lnght = len;
+  	  name_of_most = nm;
   	}
   }
+
   cout << name_of_most << endl;
 }
 void max_street(stops& pp){
   vector<stop>cur_stop = pp.get();
   map<string, int>cnt_street;
-  //todo range-based for
-  for(int i = 0;i < (int)cur_stop.size();i++){
-    if(cur_stop[i].loc != ""){
-    	cnt_street[cur_stop[i].loc]++;
-    }
+
+  //fixed range-based for
+  for(auto& cur: cur_stop){
+  	if(cur.loc != "") {
+      cnt_street[cur.loc]++;
+    } 
   }
+
   string name_of_street;
   int cnt_stops = 0;
-  for(map<string, int>::iterator it = cnt_street.begin();it != cnt_street.end();it++){
-    if(cnt_stops < it->second){
-      cnt_stops = it->second;
-      name_of_street = it->first;
+
+  for (auto&& [nm, count]: cnt_street) {
+   if(cnt_stops < count){
+      cnt_stops = count;
+      name_of_street = nm;
     }
   }
   cout << name_of_street  << endl;
+
 }
 int main()
 { 
 	setlocale(LC_ALL, "Russian");
     stops p("data.xml");
+
     set<string>ss = p.transport_name();
-    for(set<string>::iterator it = ss.begin();it != ss.end();it++){
-    	cout << *it << ' ';
-        max_root(*it,p);
+
+    for(auto cur: ss) {
+    	cout << cur << ' ';
+        max_root(cur, p);
 	}
-	for(set<string>::iterator it = ss.begin();it != ss.end();it++){
-    	cout << *it << ' ';
-        max_stops(*it,p);
+
+	cout << endl;
+
+	for(auto cur: ss) {
+    	cout << cur << ' ';
+        max_stops(cur, p);
 	}
+
+	cout << endl;
+
     max_street(p);
 }
