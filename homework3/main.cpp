@@ -8,7 +8,8 @@
 #include<string>
 #include<algorithm>
 using namespace std; 
-//fixed S P A C E S
+//todo S P A C E S
+//todo indents are different, its not good
 struct stop {
   int number;
   float cord_x, cord_y;
