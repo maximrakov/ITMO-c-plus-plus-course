@@ -1,3 +1,4 @@
+#include<functional>
 template<class TInputIterator, class TPredicat>
 bool allOf(TInputIterator begin, TInputIterator end, TPredicat pred) {
     for (; begin != end; begin++) {
