@@ -54,7 +54,15 @@ bool isSorted(TInputIterator begin, TInputIterator end, TPredicat pred) {
 
 template<class TInputIterator>
 bool isSorted(TInputIterator begin, TInputIterator end) {
-    return isSorted(begin, end, std::less());
+    TInputIterator prev = begin;
+    begin++;
+    for (; begin != end; begin++) {
+        if ((*prev) > (*begin)) {
+            return 0;
+        }
+        prev = begin;
+    }
+    return 1;
 }
 
 
