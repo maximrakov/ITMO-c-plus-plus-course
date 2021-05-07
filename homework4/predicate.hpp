@@ -39,6 +39,7 @@ bool oneOf(TInputIterator begin, TInputIterator end, TPredicat pred) {
     return cnt == 1;
 }
 
+//todo default template argument std::less
 template<class TInputIterator, class TPredicat>
 bool isSorted(TInputIterator begin, TInputIterator end, TPredicat pred) {
     TInputIterator prev = begin;
