@@ -77,7 +77,7 @@ public:
         sz = 0;
         buff = new int[capac];
     }
-
+    //todo O(1) all operations
     void addFirst(T x) {
         for (int i = min(capac - 1, sz); i > 0; i--) {
             buff[i] = buff[i - 1];
@@ -123,6 +123,7 @@ public:
         sz--;
     }
 
+    //todo information about size and index in exception
     T &operator[](int ind) const {
         if (ind < 0 || ind >= sz) {
             throw out_of_range("out of range");
