@@ -162,6 +162,7 @@ int main(){
     callAssert(equal_to<>(), c.first(), 2);
     callAssert(equal_to<>(), c.last(), 2);
     c.delLast();
+    // print<cout>(c);
     try {
         c[0] = 1;
         throw "out of range";
@@ -182,14 +183,15 @@ int main(){
         print(e.what());
     }
     print<ss>(c);
+    print<cout>(c);
     c.addFirst(5);
     print<ss>(c);
     c.changeCapacity(5);
     print<ss>(c);
     c.addFirst(6);
     print<ss>(c);
-	sort(c.begin(), c.end());
     print<ss>(c);
+    cout << "YES" << endl;
     callAssert(equal_to<>(), ss.str(), "4 3 2 1\n"
                                        "\n"
                                        "5 4 3 2\n"
@@ -200,6 +202,7 @@ int main(){
                                        "\n"
                                        "2 3 4 5 6\n"
                                        "\n");
+    cout << "WEF" << endl;
     CircularBuffer<string> cs(4);
     cs.addFirst("First");	
     print(cs[0]);
