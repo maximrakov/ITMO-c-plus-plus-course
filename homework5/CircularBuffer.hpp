@@ -75,7 +75,7 @@ public:
     CircularBuffer(int capacity) {
         capac = capacity;
         sz = 0;
-        buff = new int[capac];
+        buff = new T[capac];
     }
 
     void addFirst(T x) {
@@ -122,7 +122,7 @@ public:
     void delLast() {
         sz--;
     }
-    
+
     //todo information about size and index in exception
     T &operator[](int ind) const {
         if (ind < 0 || ind >= sz) {
